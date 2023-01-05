@@ -9,6 +9,8 @@ import {
 //   Route,
   Link,
 } from "react-router-dom";
+import CreateProduct from '../components/Postpage/CreateProduct';
+import Navbar from '../components/Navbar/Navbar';
 function Allroutes(props) {
 
     const router = createBrowserRouter([
@@ -23,6 +25,12 @@ function Allroutes(props) {
             element: (
                 <Adminpage/>
             )
+        },
+        {
+            path: "/create",
+            element: (
+                <CreateProduct/>
+            )
         }
     ])
     return (
@@ -33,8 +41,9 @@ function Allroutes(props) {
         //     <Route path="/admin" element={<Adminpage/>}></Route>
         // </Routes>
         // <Adminpage/>
-        <RouterProvider router={router}/>
-
+         <>
+           <RouterProvider router={router}/>
+      </>
        
         
     );
