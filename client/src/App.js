@@ -10,9 +10,11 @@ function App() {
   return (
     
     // <BrowserRouter>
+     <>
+     
         <Allroutes/> 
     // {/* </BrowserRouter> */}
-   
+    </>
 
    
     
