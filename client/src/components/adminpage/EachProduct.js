@@ -19,7 +19,8 @@ import {Formik, Form, Field} from "formik"
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { requestroute } from '../../constants';
-function EachProduct({title, image, category, description,price,_id}) {
+
+function EachProduct({title, image, category, description,price,_id}, props) {
 
     const preloadedValues = {
         title, image, category, description,price,_id
@@ -53,12 +54,28 @@ function EachProduct({title, image, category, description,price,_id}) {
             details
         });
         console.log(postResponse.data);
+
+        setTimeout(()=>{
+            onClose();
+            props.getProductFunction();
+        }, 2000)
     }
 
     const onInputChange = (e)=>{
          const {name, value} = e.target;
          
          setDetails({...details, [name]:value});
+    }
+
+    const deleteAction = async ()=>{
+        
+        try{
+            let response = await axios.delete(`${requestroute}product/${_id}`);
+            console.log(response);
+        }catch(err){
+            console.log(err);
+        }
+
     }
 
     return (
@@ -89,8 +106,12 @@ function EachProduct({title, image, category, description,price,_id}) {
     </CardBody>
 
     <CardFooter>
-      <Button variant='solid' colorScheme='blue' onClick={onOpen}>
+      <Button variant='outline' colorScheme='blue' onClick={onOpen}>
         Edit
+      </Button>
+
+      <Button variant='solid' colorScheme='red'  marginLeft={"40px"} onClick={deleteAction}>
+        Delete
       </Button>
     </CardFooter>
   </Stack>
@@ -156,14 +177,7 @@ function EachProduct({title, image, category, description,price,_id}) {
           </Field>
 
 
-          <Button
-            mt={4}
-            colorScheme='teal'
-            
-            type='submit'
-          >
-            Submit
-          </Button>
+          
 
           <Button
           mt={4}

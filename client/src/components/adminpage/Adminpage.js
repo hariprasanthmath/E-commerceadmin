@@ -31,7 +31,7 @@ function Adminpage(props) {
            <Box width={"80%"} margin="auto"> 
            {
             data.map((eachProd)=>{
-              return <Box key={eachProd._id}> <EachProduct {...eachProd} /> </Box>
+              return <Box key={eachProd._id}> <EachProduct {...eachProd} getProductFunction={getUserProducts}/> </Box>
             })
            }
            </Box>

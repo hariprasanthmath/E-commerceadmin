@@ -73,6 +73,25 @@ app.patch("/products/:_id", async (req, res)=>{
     }
 })
 
+app.delete("/product/:_id", async (req, res)=>{
+
+    try{
+
+        let _id = req.params._id;
+        
+        await ProductModel.deleteOne({_id});
+
+        res.status(201).send("Delete success");
+
+    }catch(err){
+
+        res.status(500).send("delete failed");
+
+    }
+})
+
+
+
 connect().then(()=>{
     app.listen(5000, ()=>{
         console.log("listening in 5000");
