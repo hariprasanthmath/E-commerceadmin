@@ -39,9 +39,9 @@ app.post("/product", async (req, res)=>{
 })
 
 app.get("/products", async(req, res)=>{
+    
     try{
 
-        
         let allProducts = await ProductModel.find();
         console.log(allProducts);
         res.status(201).send(allProducts);
@@ -50,6 +50,26 @@ app.get("/products", async(req, res)=>{
     catch(err){
         console.log(err);
         res.status(500).send(err);
+    }
+})
+
+app.patch("/products/:_id", async (req, res)=>{
+
+    try{
+
+       let _id = req.params._id;
+       let reqData = req.body.details;
+       console.log(_id, reqData);
+
+       await ProductModel.updateOne({_id},{$set: {...reqData}});
+       
+       res.status(201).send("Edit success")
+
+    }catch(err){
+        console.log("failed");
+
+        res.status(500).send(err);
+
     }
 })
 

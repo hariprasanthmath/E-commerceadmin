@@ -17,6 +17,8 @@ import { useState } from 'react';
 import {useForm} from "react-hook-form"
 import {Formik, Form, Field} from "formik"
 import { useDisclosure } from '@chakra-ui/react';
+import axios from 'axios';
+import { requestroute } from '../../constants';
 function EachProduct({title, image, category, description,price,_id}) {
 
     const preloadedValues = {
@@ -27,20 +29,37 @@ function EachProduct({title, image, category, description,price,_id}) {
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
 
-    const {register, handleSubmit} = useForm({
-        defaultValues: preloadedValues
-    })
+    // const {register, handleSubmit} = useForm({
+    //     defaultValues: preloadedValues
+    // })
 
     
 
-    // let [details, setDetails] = useState({
-    //     title, image, category, description,price
-    // });
+    let [details, setDetails] = useState({
+        title, image, category, description, price, _id
+    });
 
     // let handleEdit = (e)=>{
     //     let {name, value} = e.target.value;
     //     setDetails({...details, [name]:value});
     // }
+
+    // let [editedValue, setEdit] = useState({
+    //     ...preloadedValues
+    // });
+
+    const saveChangesToBackend = async ()=>{
+        let postResponse = await axios.patch(`${requestroute}products/${_id}`, {
+            details
+        });
+        console.log(postResponse.data);
+    }
+
+    const onInputChange = (e)=>{
+         const {name, value} = e.target;
+         
+         setDetails({...details, [name]:value});
+    }
 
     return (
         <>
@@ -88,17 +107,20 @@ function EachProduct({title, image, category, description,price,_id}) {
           <ModalHeader>Edit product details</ModalHeader>
           <ModalCloseButton />
 
+          <ModalBody>
+
           <Formik
-              initialValues={{ ...preloadedValues}}
+              initialValues={{ ...details}}
+
           >
-          <Form>
+          <Form onChange={onInputChange}>
           <Field name='title' >
             {({ field, form }) => (
-              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormControl isInvalid={form.errors.name && form.touched.name}>
                 <FormLabel>Title</FormLabel>
-                <Input {...field} placeholder='' />
-                
-              </FormControl>
+                <Input {...field} placeholder='' name="title" />
+                </FormControl>
+             
             )}
           </Field>
 
@@ -142,6 +164,16 @@ function EachProduct({title, image, category, description,price,_id}) {
           >
             Submit
           </Button>
+
+          <Button
+          mt={4}
+          colorScheme='teal'
+          marginLeft="5px"
+          variant={"outline"}
+          onClick={saveChangesToBackend}
+          >
+            save
+          </Button>
         </Form>
          
 
@@ -150,6 +182,8 @@ function EachProduct({title, image, category, description,price,_id}) {
          
 
           </Formik>
+
+          </ModalBody>
 
         </ModalContent>
       </Modal>
