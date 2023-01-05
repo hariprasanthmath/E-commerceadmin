@@ -1,9 +1,49 @@
 import React from 'react';
-import { Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button } from '@chakra-ui/react';
+import { Card, CardBody, Image, Stack, Heading, Text, Divider, CardFooter, ButtonGroup, Button, Textarea } from '@chakra-ui/react';
+import {
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
+    FormControl,
+    FormLabel,
+    Input,
+    // Button
+} from '@chakra-ui/react'
+import { useState } from 'react';
+import {useForm} from "react-hook-form"
+import {Formik, Form, Field} from "formik"
+import { useDisclosure } from '@chakra-ui/react';
 function EachProduct({title, image, category, description,price,_id}) {
 
+    const preloadedValues = {
+        title, image, category, description,price,_id
+    }
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const initialRef = React.useRef(null)
+    const finalRef = React.useRef(null)
+
+    const {register, handleSubmit} = useForm({
+        defaultValues: preloadedValues
+    })
+
+    
+
+    // let [details, setDetails] = useState({
+    //     title, image, category, description,price
+    // });
+
+    // let handleEdit = (e)=>{
+    //     let {name, value} = e.target.value;
+    //     setDetails({...details, [name]:value});
+    // }
+
     return (
-        
+        <>
          <Card
          key={_id}
   direction={{ base: 'column', sm: 'row' }}
@@ -30,13 +70,91 @@ function EachProduct({title, image, category, description,price,_id}) {
     </CardBody>
 
     <CardFooter>
-      <Button variant='solid' colorScheme='blue'>
+      <Button variant='solid' colorScheme='blue' onClick={onOpen}>
         Edit
       </Button>
     </CardFooter>
   </Stack>
 </Card>
+ 
+<Modal
+        initialFocusRef={initialRef}
+        finalFocusRef={finalRef}
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Edit product details</ModalHeader>
+          <ModalCloseButton />
 
+          <Formik
+              initialValues={{ ...preloadedValues}}
+          >
+          <Form>
+          <Field name='title' >
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormLabel>Title</FormLabel>
+                <Input {...field} placeholder='' />
+                
+              </FormControl>
+            )}
+          </Field>
+
+          <Field name='description' >
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormLabel>Description</FormLabel>
+                <Textarea {...field} placeholder=''> 
+                
+                </Textarea>
+              </FormControl>
+            )}
+          </Field>
+
+          <Field name='price' >
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormLabel>Price</FormLabel>
+                <Input {...field} placeholder='' />
+                
+              </FormControl>
+            )}
+          </Field>
+
+          <Field name='image' >
+            {({ field, form }) => (
+              <FormControl isInvalid={form.errors.name && form.touched.name}>
+                <FormLabel>Price</FormLabel>
+                <Input {...field} placeholder='' />
+                
+              </FormControl>
+            )}
+          </Field>
+
+
+          <Button
+            mt={4}
+            colorScheme='teal'
+            
+            type='submit'
+          >
+            Submit
+          </Button>
+        </Form>
+         
+
+          
+
+         
+
+          </Formik>
+
+        </ModalContent>
+      </Modal>
+
+</>
        
     );
 }
