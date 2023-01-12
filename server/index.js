@@ -91,10 +91,10 @@ app.delete("/product/:_id", async (req, res)=>{
 })
 
 
-
+let PORT = process.env.PORY || 5000;
 connect().then(()=>{
-    app.listen(5000, ()=>{
-        console.log("listening in 5000");
+    app.listen(PORT, ()=>{
+        console.log("listening in "+ PORT);
     })
 })
 

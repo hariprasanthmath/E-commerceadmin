@@ -19,8 +19,9 @@ import {Formik, Form, Field} from "formik"
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { requestroute } from '../../constants';
-
-function EachProduct({title, image, category, description,price,_id}, props) {
+import { useSelector, useDispatch } from 'react-redux';
+import { getDatafrombackend } from '../../redux/actions/action';
+function EachProduct({title, image, category, description,price,_id}) {
 
     const preloadedValues = {
         title, image, category, description,price,_id
@@ -49,15 +50,24 @@ function EachProduct({title, image, category, description,price,_id}, props) {
     //     ...preloadedValues
     // });
 
+    let dispatch = useDispatch();
+
+  const getAndSetData = async ()=>{
+    let {data} = await axios.get(`${requestroute}products`);
+    console.log(data);
+    
+    getDatafrombackend(dispatch,data);
+  }
+
     const saveChangesToBackend = async ()=>{
         let postResponse = await axios.patch(`${requestroute}products/${_id}`, {
             details
         });
         console.log(postResponse.data);
-
+        getAndSetData();
         setTimeout(()=>{
             onClose();
-            props.getProductFunction();
+            
         }, 2000)
     }
 
