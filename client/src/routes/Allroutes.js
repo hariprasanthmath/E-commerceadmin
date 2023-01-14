@@ -11,6 +11,11 @@ import {
 } from "react-router-dom";
 import CreateProduct from '../components/Postpage/CreateProduct';
 import Navbar from '../components/Navbar/Navbar';
+import StarterNavbar from '../components/Navbar/StarterNavbar';
+import { ChakraProvider } from '@chakra-ui/react';
+import LandingPage from '../components/LandingPage/LandingPage';
+import Loginpage from '../components/loginRegister/Loginpage';
+import RegistrationPage from '../components/loginRegister/RegistrationPage';
 function Allroutes(props) {
 
     const router = createBrowserRouter([
@@ -35,15 +40,30 @@ function Allroutes(props) {
     ])
     return (
        
+       <div>
+           <ChakraProvider>
+             <StarterNavbar/>
+           </ChakraProvider>
+           <Routes>
+            <Route path="/" element={<ChakraProvider> <LandingPage/> </ChakraProvider>}></Route>
+            <Route path="/login" element={<ChakraProvider> <Loginpage/> </ChakraProvider>}></Route>
+            <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route>
+            {/* <Route path="/admin" element={<ChakraProvider> <Adminpage/> </ChakraProvider>}></Route> */}
+           </Routes>
+           <ChakraProvider>
+             
+           </ChakraProvider>
+       </div>
        
-        // <Routes>
-        //     <Route path="/" element={<Navigate to={"/admin"} />}></Route>
-        //     <Route path="/admin" element={<Adminpage/>}></Route>
-        // </Routes>
         // <Adminpage/>
-         <>
-           <RouterProvider router={router}/>
-      </>
+        //  <div>
+        //      {/* <StarterNavbar/> */}
+        //      {/* <Navbar/> */}
+        //     <RouterProvider router={router}/>  
+        //  </div>
+
+           
+      
        
         
     );

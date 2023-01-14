@@ -7,7 +7,7 @@ function Navbar(props) {
           <Box display={"flex"} justifyContent={"space-around"} width={"80%"} margin={"auto"} >
           <Link to={"/create"}>Create New Product</Link>
           <Link to={"/admin"}>Admin DashBoard</Link>
-        </Box>
+          </Box>
         </>
     );
 }
