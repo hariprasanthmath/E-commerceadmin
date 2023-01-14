@@ -1,3 +1,4 @@
+//loading environmental variables
 require('dotenv').config()
 
 const path = require("path");
@@ -8,18 +9,19 @@ const connect = require("./db/connect")
 const app = express();
 const adminRoute = require("./routes/admin.route");
 
-
+// mongoose model for Product collection
 const ProductModel = require("./db/product.model");
 
 app.use(express.json());
 app.use(cors());
+
+// will log request type
 app.use(morgan('tiny'));
 
 app.use(express.static("build"));
-app.use("/admin", adminRoute);
 
 
-
+// test route
 app.get("/", (req, res)=>{
     console.log("get to main route");
     res.send({message:"main route"})
@@ -39,6 +41,7 @@ app.post("/product", async (req, res)=>{
     }
 })
 
+// will return all the product in database
 app.get("/products", async(req, res)=>{
     
     try{
@@ -54,6 +57,8 @@ app.get("/products", async(req, res)=>{
     }
 })
 
+
+// will edit the data of the product with specific _id
 app.patch("/products/:_id", async (req, res)=>{
 
     try{
@@ -74,6 +79,8 @@ app.patch("/products/:_id", async (req, res)=>{
     }
 })
 
+
+//will delete the product with that _id
 app.delete("/product/:_id", async (req, res)=>{
 
     try{
@@ -92,7 +99,7 @@ app.delete("/product/:_id", async (req, res)=>{
 })
 
 
-let PORT = process.env.PORY || 5000;
+// connection to database - if connected then app will listen in port 5000
 connect().then(()=>{
     app.listen(PORT, ()=>{
         console.log("listening in "+ PORT);
