@@ -5,10 +5,18 @@ import { requestroute } from '../../constants';
 import axios from 'axios';
 import EachProduct from './EachProduct';
 import { Box } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getDatafrombackend } from '../../redux/actions/action';
+import { Store } from '../../redux/store';
 function Adminpage(props) {
 
-    let [data, setdata] = useState([]);
+    // let [data, setdata] = useState(useSelector((State)=>{ return State.productData}));
+    let data = useSelector((State)=>{ return State.productData});
 
+    let dispatch = useDispatch();
+    
+    
     // get all the products
     useEffect(()=>{
         getUserProducts();
@@ -16,9 +24,10 @@ function Adminpage(props) {
 
     const getUserProducts = async ()=>{
         try{
-            let response = await axios.get(`${requestroute}products`);
-            console.log(response.data);
-            setdata(response.data);
+            let {data} = await axios.get(`${requestroute}products`);
+            // console.log(data);
+            getDatafrombackend(dispatch, data)
+            
         }catch(err){
             console.log(err);
         }

@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connect = require("./db/connect")
 const app = express();
+const adminRoute = require("./routes/admin.route");
 
 // mongoose model for Product collection
 const ProductModel = require("./db/product.model");
@@ -18,7 +19,6 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 app.use(express.static("build"));
-
 
 
 // test route
@@ -101,8 +101,8 @@ app.delete("/product/:_id", async (req, res)=>{
 
 // connection to database - if connected then app will listen in port 5000
 connect().then(()=>{
-    app.listen(5000, ()=>{
-        console.log("listening in 5000");
+    app.listen(PORT, ()=>{
+        console.log("listening in "+ PORT);
     })
 })
 
