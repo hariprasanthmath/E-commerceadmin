@@ -6,7 +6,7 @@ function RegistrationPage(props) {
 
     return (
         <Container className="registercontainer">
-            <Box><Heading>Register</Heading></Box>
+            <Box className="headingbox"><Heading size='lg' >Register</Heading></Box>
             <label for="username">User Name</label>
             <Input id="username">
             
@@ -24,7 +24,7 @@ function RegistrationPage(props) {
 
             </Input>
             
-            <Button></Button>
+            <Button className="registerbutton">Register</Button>
             
 
 
