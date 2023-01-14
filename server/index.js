@@ -6,6 +6,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connect = require("./db/connect")
 const app = express();
+const adminRoute = require("./routes/admin.route");
 
 
 const ProductModel = require("./db/product.model");
@@ -15,7 +16,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 app.use(express.static("build"));
-
+app.use("/admin", adminRoute);
 
 
 
