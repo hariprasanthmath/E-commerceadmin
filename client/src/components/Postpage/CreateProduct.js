@@ -67,7 +67,7 @@ function CreateProduct(props) {
 
     return (
       <>
-      <Navbar/>
+      {/* <Navbar/> */}
         <Box>
         <VStack onChange={handleInputChange}>
           <Input placeholder='enter product title' name="title" style={InputStyle} required/>

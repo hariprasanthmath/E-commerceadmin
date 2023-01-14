@@ -36,7 +36,7 @@ function Adminpage(props) {
     
     return (
         <>
-           <Navbar/>
+           {/* <Navbar/> */}
            <Box width={"80%"} margin="auto"> 
            {
             data.map((eachProd)=>{

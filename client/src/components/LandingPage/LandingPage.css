@@ -1,0 +1,7 @@
+#maincontainer {
+    margin: 0px 5%;
+}
+
+.scrollable-element {
+    scrollbar-color: dark;
+  }
