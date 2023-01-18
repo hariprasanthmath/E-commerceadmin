@@ -11,24 +11,29 @@ route.get("/", (req, res)=>{
 
 route.post("/register" ,async (req, res)=>{
     try{
-        const {name, email, password, mobile} = req.body;
-        let alreadyRegistered = await adminModel.findOne({email});
-        
+        const {name, email, password, mobile} = req.body.formstate;
+        const alreadyRegistered = await adminModel.findOne({email});
+        // const alreadyRegisteredcount =  adminModel.find({email}).count;
+        console.log(alreadyRegistered);
+        console.log(name, email);
         if(alreadyRegistered){
-            res.status(400).send({message:"Account already present"});
+            res.send({message:"Account already present"});
+        }else{
+            let _id = await adminModel.create({name, email, password, mobile});
+            res.status(201).send({message:"success"});
         }
+       
 
-        let _id = await adminModel.create({name, email, password, mobile});
-        res.status(201).send({_id});
+     
        
     }catch(err){
-        res.send({message:err})
+        res.status(400).send({message:err})
     }
 })
 
 route.post("/login", async (req, res)=>{
     try{
-       const {email, password} = req.body;
+       const {email, password} = req.body.formstate;
        let admin = await adminModel.findOne({email});
        
        if(admin){
@@ -46,7 +51,7 @@ route.post("/login", async (req, res)=>{
        }
        
     }catch(err){
-
+        res.status(401).send({message:"error"});
     }
 })
 
