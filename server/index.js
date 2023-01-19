@@ -8,7 +8,8 @@ const morgan = require("morgan");
 const connect = require("./db/connect")
 const app = express();
 const adminRoute = require("./routes/admin.route");
-
+const auth = require("./middleware/auth")
+const auth2 = require("./middleware/auth2")
 // mongoose model for Product collection
 const ProductModel = require("./db/product.model");
 
@@ -30,10 +31,12 @@ app.get("/", (req, res)=>{
 
 
 // create a product in a database
-app.post("/product", async (req, res)=>{
+app.post("/product", auth, async (req, res)=>{
     try{
         let reqData = req.body.productdata;
+        let email = req.email;
         console.log(reqData);
+        reqData.owner = email;
         const result = await ProductModel.create(reqData)
         res.status(201).send("Registered Successfully");
     }catch(err){
@@ -45,7 +48,7 @@ app.post("/product", async (req, res)=>{
 app.get("/products", async(req, res)=>{
     
     try{
-
+        
         let allProducts = await ProductModel.find();
         console.log(allProducts);
         res.status(201).send(allProducts);
@@ -55,6 +58,22 @@ app.get("/products", async(req, res)=>{
         console.log(err);
         res.status(500).send(err);
     }
+})
+
+app.get("/adminproducts" , auth2, async (req, res)=>{
+    
+    try{
+        let email = req.email;
+        console.log(email);
+        let allProducts = await ProductModel.find({owner:email});
+        console.log(allProducts);
+        res.status(201).send(allProducts);
+
+    }catch(err){
+        console.log(err);
+        res.status(500).send(err);
+    }
+
 })
 
 

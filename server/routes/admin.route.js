@@ -40,7 +40,7 @@ route.post("/login", async (req, res)=>{
          let passwordMatch = admin.password == password;
          console.log(passwordMatch);
         if(passwordMatch) {
-             
+             console.log(email);
          let token = jwt.sign({email}, config.JWTKEY, {expiresIn : config.JWTEXPIRETIME});
          res.status(201).send({token});
         }else{

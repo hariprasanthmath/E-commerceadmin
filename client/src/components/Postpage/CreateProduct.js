@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from "framer-motion"
 import {Box, VStack, Input, Checkbox, Button} from "@chakra-ui/react"
 import axios from "axios"
 import { useRef, useState } from 'react';
 import { requestroute } from '../../constants';
 import Navbar from '../Navbar/Navbar';
+import Cookies from "universal-cookie"
+import { useDispatch } from 'react-redux';
+import { setLoginTrue } from '../../redux/actions/action';
 function CreateProduct(props) {
     const InputStyle = {
         maxWidth: "500px" 
     }
 
-    const currentuseremail  = "admintest@gmail.com"
+    // const currentuseremail  = "admintest@gmail.com"
 
     let [productdata, setProductdata] = useState({
          title: "",
@@ -18,8 +21,20 @@ function CreateProduct(props) {
          image: "",
          price: "",
          category:"",
-         owner: currentuseremail
+        //  owner: currentuseremail
     });
+
+    let [tokenstate, setToken] = useState();
+    let cookies = new Cookies();
+    let dispatch = useDispatch();
+
+   useEffect(()=>{
+    let token = cookies.get('jwt');
+    if(token){
+        setLoginTrue(dispatch, true)
+        setToken(token);
+    }
+   },[])
 
 
     const handleSubmit = async (e)=>{
@@ -40,7 +55,11 @@ function CreateProduct(props) {
             try{
 
                 let response = await axios.post(`${requestroute}product`, {
-                    productdata
+                    productdata,
+                    headers : {
+                        'Content-Type' : 'application/json',
+                        'Authorization' : "bearer "+  tokenstate
+                    }
         
                 });
                 console.log(response);

@@ -26,17 +26,38 @@ function Adminpage(props) {
        setLoginTrue(dispatch, false)
        navigate("/")
     }
+
+    let [tokenstate, setToken] = useState("");
+    // let cookies = new Cookies();
+    // let dispatch = useDispatch();
+
+   useEffect(()=>{
+    let token = cookies.get('jwt');
+    // console.log(token);
+    if(token){
+        setLoginTrue(dispatch, true)
+        setToken(token);
+    }
+   },[])
     
     
     // get all the products
     useEffect(()=>{
-        getUserProducts();
-    },[])
+        
+            getUserProducts();
+
+    },[tokenstate])
 
     const getUserProducts = async ()=>{
+        // console.log(tokenstate+"  token state");
         try{
-            let {data} = await axios.get(`${requestroute}products`);
-            // console.log(data);
+            let {data} = await axios.get(`${requestroute}adminproducts`,{
+                headers : {
+                    'Content-Type' : 'application/json',
+                    'Authorization' : "Bearer "+  tokenstate
+                }
+            });
+            //  console.log(data);
             getDatafrombackend(dispatch, data)
             
         }catch(err){
@@ -48,16 +69,28 @@ function Adminpage(props) {
     return (
         <>
            {/* <Navbar/> */}
-           <Box width={"80%"} margin="auto"> 
            {
+            data.length > 0 ?
+            <Box width={"80%"} margin="auto"> 
+           
+           {
+
             data.map((eachProd)=>{
               return <Box key={eachProd._id}> <EachProduct {...eachProd} getProductFunction={getUserProducts}/> </Box>
             })
            }
+           </Box> : 
+           <Box>
+              <h1>
+                add products to store
+              </h1>
            </Box>
+           }
            <button onClick={handlelogout}>logout</button>
         </>
     );
 }
+
+
 
 export default Adminpage;

@@ -1,12 +1,13 @@
 const jwt = require("jsonwebtoken");
 const config = require("../config/index")
-async function auth(req, res, next){
-    let authorization = req.body.headers.Authorization;
-   
+async function auth2(req, res, next){
+    let authorization = req.headers.authorization;
+   console.log(authorization);
     if(authorization){
-        let token = authorization.split(" ").pop();
-        console.log(token);
+      
         try{
+            let token = authorization.split(" ").pop();
+            console.log(token);
             if(token){
                 jwt.verify(token, config.JWTKEY);
                 let email = jwt.decode(token);
@@ -19,6 +20,7 @@ async function auth(req, res, next){
                 return res.send({message:"not authorized 1"})
             }
         }catch(err){
+            console.log(err);
             return res.send(err)
         }
     }else{
@@ -26,4 +28,4 @@ async function auth(req, res, next){
     }
 }
 
-module.exports = auth;
+module.exports = auth2;

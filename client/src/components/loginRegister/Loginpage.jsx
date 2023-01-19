@@ -36,7 +36,7 @@ function Loginpage(props) {
         let token = cookies.get('jwt');
         if(token){
             setLoginTrue(dispatch, true)
-        console.log("setting login");
+            console.log("setting login");
            navigate('/admin');
         }
     },[])

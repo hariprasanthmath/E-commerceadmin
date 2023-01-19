@@ -70,8 +70,15 @@ function Allroutes(props) {
             <Route path="/login" element={<ChakraProvider> <Loginpage/> </ChakraProvider>}></Route>
             <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route>
             {/* <Route path="/admin" element={<Navigate to={"/admin"}/>}></Route> */}
-                <Route path="/admin" element={<ChakraProvider><Adminpage/></ChakraProvider> }></Route>
+                {/* <Route path="/admin" element={ }></Route> */}
                 <Route path="/create" element={<ChakraProvider><CreateProduct/></ChakraProvider> }></Route>
+                <Route path='/admin' element={<ChakraProvider><Adminpage/></ChakraProvider>}>
+                        <Route path='' element={<Navigate to="products"/>}></Route>
+                        {/* <Route path="electronics" element={<Electronics/>}></Route> */}
+                        {/* <Route path="jewelery" element={<Jewelery/>}></Route> */}
+                        {/* <Route path="mensc" element={<Mensc/>}></Route> */}
+                        {/* <Route path="womensc" element={<Womensc/>}></Route> */}
+                </Route>
             {/* <Route path="/admin" element={<ChakraProvider> <Adminpage/> </ChakraProvider>}></Route> */}
            </Routes>
            <ChakraProvider>
