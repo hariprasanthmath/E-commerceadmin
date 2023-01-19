@@ -7,3 +7,9 @@ export const getDatafrombackend = (dispatch, data)=>{
       })
 }
 
+export const setLoginTrue = (dispatch, data)=>{
+  dispatch({
+    type: "SETLOGIN",
+    payload : data
+  })
+}

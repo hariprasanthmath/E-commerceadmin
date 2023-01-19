@@ -9,12 +9,23 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getDatafrombackend } from '../../redux/actions/action';
 import { Store } from '../../redux/store';
+import Cookies from 'universal-cookie';
+import { setLoginTrue } from '../../redux/actions/action';
+import { useNavigate } from 'react-router-dom';
 function Adminpage(props) {
 
     // let [data, setdata] = useState(useSelector((State)=>{ return State.productData}));
     let data = useSelector((State)=>{ return State.productData});
 
     let dispatch = useDispatch();
+    
+    let cookies = new Cookies();
+    const navigate = useNavigate();
+    const handlelogout = ()=>{
+       cookies.remove("jwt", {path:"/"});
+       setLoginTrue(dispatch, false)
+       navigate("/")
+    }
     
     
     // get all the products
@@ -44,6 +55,7 @@ function Adminpage(props) {
             })
            }
            </Box>
+           <button onClick={handlelogout}>logout</button>
         </>
     );
 }

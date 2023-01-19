@@ -5,7 +5,18 @@ import axios from 'axios';
 import { loginuserRoute } from '../../constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Cookies from "universal-cookie"
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { setLoginTrue } from '../../redux/actions/action';
+import { useDispatch } from 'react-redux';
 function Loginpage(props) {
+
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+
     let [formstate, setFormState] = useState({
         
         email : "",
@@ -21,6 +32,15 @@ function Loginpage(props) {
         })
      }
 
+     useEffect(()=>{
+        let token = cookies.get('jwt');
+        if(token){
+            setLoginTrue(dispatch, true)
+        console.log("setting login");
+           navigate('/admin');
+        }
+    },[])
+
      const notify = (message) => toast(message);
 
      const handleRegister = async ()=>{
@@ -32,7 +52,13 @@ function Loginpage(props) {
     
             });
             console.log(response.data);
+            cookies.set('jwt' , response.data.token , {
+                maxAge:24 * 60 * 60 * 100,
+                path : "/"
+              });
+            setLoginTrue(dispatch, true)
             notify("Success");
+            navigate("/admin")
     
            }catch(err){
             let {response }  = err;
