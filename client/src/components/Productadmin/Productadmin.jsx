@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Navbar from '../Navbar/Navbar';
 import { requestroute } from '../../constants';
 import axios from 'axios';
-import EachProduct from './EachProduct';
+import EachProduct from '../adminpage/EachProduct';
 import { Box, Flex, Center, Square, Text } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
@@ -13,11 +13,9 @@ import Cookies from 'universal-cookie';
 import { setLoginTrue } from '../../redux/actions/action';
 import { useNavigate } from 'react-router-dom';
 import Admindashboard from '../admindashboard/Admindashboard';
-import { Outlet } from 'react-router-dom';
 
-function Adminpage(props) {
+function Productadmin(props) {
 
-    // let [data, setdata] = useState(useSelector((State)=>{ return State.productData}));
     let data = useSelector((State)=>{ return State.productData});
 
     let dispatch = useDispatch();
@@ -68,28 +66,30 @@ function Adminpage(props) {
         }
         
     }
-    
+
+
+
     return (
         <>
-           {/* <Navbar/> */}
-           <Flex color='black'>
-           <Box flex='1' bg='' maxW={"280px"}>
-                  <Admindashboard/>
-               </Box>
-               
-               <Box flex='4' bg=''>
-                  <Outlet/>
-               </Box>
-          </Flex>
+        {
+            data.length > 0 ?
+            <Box width={"80%"} margin="auto"> 
+           
+           {
 
-           
-           
-          
-           <button onClick={handlelogout}>logout</button>
+            data.map((eachProd)=>{
+              return <Box key={eachProd._id}> <EachProduct {...eachProd} getProductFunction={getUserProducts}/> </Box>
+            })
+           }
+           </Box> : 
+           <Box>
+              <h1>
+                add products to store
+              </h1>
+           </Box>
+           }
         </>
     );
 }
 
-
-
-export default Adminpage;
+export default Productadmin;

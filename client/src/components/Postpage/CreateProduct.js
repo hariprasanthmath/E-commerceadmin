@@ -37,7 +37,7 @@ function CreateProduct(props) {
    },[])
 
 
-    const handleSubmit = async (e)=>{
+    const handleSubmitCreateProduct = async (e)=>{
         e.preventDefault();
 
         let productvalues = Object.values(productdata);
@@ -94,7 +94,7 @@ function CreateProduct(props) {
           <Input placeholder='Image' style={InputStyle} name="image" required/>
           <Input placeholder='price' type="number" style={InputStyle} name="price" required/>
           <Input placeholder='category' style={InputStyle} name="category" required/>
-          <Button onClick={handleSubmit}>Create Product</Button>
+          <Button onClick={handleSubmitCreateProduct}>Create Product</Button>
        </VStack>
         </Box>
       </>

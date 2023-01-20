@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const adminModel = require("../models/admin.model")
 const auth = require("../middleware/auth")
 const config = require("../config/index")
+const auth2 = require("../middleware/auth2")
+
 route.get("/", (req, res)=>{
     console.log("admin route");
     res.send({message:"success"});
@@ -52,6 +54,19 @@ route.post("/login", async (req, res)=>{
        
     }catch(err){
         res.status(401).send({message:"error"});
+    }
+})
+
+route.get("/profile", auth2, async(req, res)=>{
+    try{
+        console.log(req);
+         let email = req.email;
+         let user = await adminModel.findOne({email});
+         console.log(user);
+         res.send(user);
+    }catch(err){
+
+        res.send(err);
     }
 })
 
