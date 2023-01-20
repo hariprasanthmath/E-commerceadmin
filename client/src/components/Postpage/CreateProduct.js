@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from "framer-motion"
 import {Box, VStack, Input, Checkbox, Button} from "@chakra-ui/react"
 import axios from "axios"
 import { useRef, useState } from 'react';
 import { requestroute } from '../../constants';
 import Navbar from '../Navbar/Navbar';
+import Cookies from "universal-cookie"
+import { useDispatch } from 'react-redux';
+import { setLoginTrue } from '../../redux/actions/action';
 function CreateProduct(props) {
     const InputStyle = {
         maxWidth: "500px" 
     }
 
-    const currentuseremail  = "admintest@gmail.com"
+    // const currentuseremail  = "admintest@gmail.com"
 
     let [productdata, setProductdata] = useState({
          title: "",
@@ -18,11 +21,23 @@ function CreateProduct(props) {
          image: "",
          price: "",
          category:"",
-         owner: currentuseremail
+        //  owner: currentuseremail
     });
 
+    let [tokenstate, setToken] = useState();
+    let cookies = new Cookies();
+    let dispatch = useDispatch();
 
-    const handleSubmit = async (e)=>{
+   useEffect(()=>{
+    let token = cookies.get('jwt');
+    if(token){
+        setLoginTrue(dispatch, true)
+        setToken(token);
+    }
+   },[])
+
+
+    const handleSubmitCreateProduct = async (e)=>{
         e.preventDefault();
 
         let productvalues = Object.values(productdata);
@@ -40,7 +55,11 @@ function CreateProduct(props) {
             try{
 
                 let response = await axios.post(`${requestroute}product`, {
-                    productdata
+                    productdata,
+                    headers : {
+                        'Content-Type' : 'application/json',
+                        'Authorization' : "bearer "+  tokenstate
+                    }
         
                 });
                 console.log(response);
@@ -75,7 +94,7 @@ function CreateProduct(props) {
           <Input placeholder='Image' style={InputStyle} name="image" required/>
           <Input placeholder='price' type="number" style={InputStyle} name="price" required/>
           <Input placeholder='category' style={InputStyle} name="category" required/>
-          <Button onClick={handleSubmit}>Create Product</Button>
+          <Button onClick={handleSubmitCreateProduct}>Create Product</Button>
        </VStack>
         </Box>
       </>
