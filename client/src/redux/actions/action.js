@@ -13,3 +13,10 @@ export const setLoginTrue = (dispatch, data)=>{
     payload : data
   })
 }
+
+export const setjwtToken = (dispatch, data) => {
+  dispatch({
+    type: "SETJWTTOKEN",
+    payload : data 
+  })
+}

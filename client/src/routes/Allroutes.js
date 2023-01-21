@@ -11,6 +11,7 @@ import {
 //   Route,
   Link,
 } from "react-router-dom";
+import { setjwtToken } from '../redux/actions/action';
 import CreateProduct from '../components/Postpage/CreateProduct';
 import Navbar from '../components/Navbar/Navbar';
 import StarterNavbar from '../components/Navbar/StarterNavbar';
@@ -36,7 +37,8 @@ function Allroutes(props) {
         let token = cookies.get('jwt');
         if(token){
             setLoginTrue(dispatch, true)
-        console.log("setting login");
+            setjwtToken(dispatch, token);
+            console.log("setting login");
            navigate('/admin');
         }
     },[])

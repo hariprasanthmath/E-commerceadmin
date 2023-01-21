@@ -78,15 +78,16 @@ app.get("/adminproducts" , auth2, async (req, res)=>{
 
 
 // will edit the data of the product with specific _id
-app.patch("/products/:_id", async (req, res)=>{
+app.patch("/products/:_id", auth, async (req, res)=>{
 
     try{
-
+         
+       let email = req.email;
        let _id = req.params._id;
        let reqData = req.body.details;
        console.log(_id, reqData);
 
-       await ProductModel.updateOne({_id},{$set: {...reqData}});
+       await ProductModel.updateOne({_id, owner:email},{$set: {...reqData}});
        
        res.status(201).send("Edit success")
 
@@ -100,15 +101,22 @@ app.patch("/products/:_id", async (req, res)=>{
 
 
 //will delete the product with that _id
-app.delete("/product/:_id", async (req, res)=>{
+app.delete("/product/:_id", auth2,  async (req, res)=>{
 
     try{
-
+        let email = req.email;
         let _id = req.params._id;
-        
-        await ProductModel.deleteOne({_id});
+       
+        let count = await ProductModel.deleteOne({_id, owner:email});
+        console.log(count);
+        if(count.deletedCount == 0){
+            res.status(201).send("Not found");
 
-        res.status(201).send("Delete success");
+        }else{
+            res.status(201).send("Delete success");
+
+        }
+       
 
     }catch(err){
 

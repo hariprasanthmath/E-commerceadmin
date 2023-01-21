@@ -1,6 +1,7 @@
 const initialState = {
     productData : [],
-    login : false
+    login : false,
+    jwt : ""
 }
 
 export const productReducer = (state = initialState, action)=>{
@@ -15,6 +16,11 @@ export const productReducer = (state = initialState, action)=>{
             ...state,
             login : action.payload
            }
+        case "SETJWTTOKEN" :
+            return {
+                ...state,
+                jwt : action.payload
+            }
         default : 
         return state;
     }
