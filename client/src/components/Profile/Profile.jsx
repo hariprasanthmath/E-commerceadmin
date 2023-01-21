@@ -26,6 +26,9 @@ function Profile(props) {
     const profileHandler = async () =>{
         let response = await getAdminProfile(getProfiledetailsRoute, tokenstate);
         // getProfiledetailsRoute
+        // if(response.message === "jwt malformed"){
+        //     alert("login again")
+        // }
         console.log(response);
     }
 

@@ -14,7 +14,7 @@ import { setLoginTrue } from '../../redux/actions/action';
 import { useNavigate } from 'react-router-dom';
 import Admindashboard from '../admindashboard/Admindashboard';
 import { Outlet } from 'react-router-dom';
-
+import { setjwtToken } from '../../redux/actions/action';
 function Adminpage(props) {
 
     // let [data, setdata] = useState(useSelector((State)=>{ return State.productData}));
@@ -29,6 +29,21 @@ function Adminpage(props) {
        setLoginTrue(dispatch, false)
        navigate("/")
     }
+
+    // let cookies = new Cookies();
+    // let dispatch = useDispatch();
+    // let navigate = useNavigate();
+
+
+    // useEffect(()=>{
+    //     let token = cookies.get('jwt');
+    //     if(token){
+    //         setLoginTrue(dispatch, true)
+    //         setjwtToken(dispatch, token);
+    //         console.log("setting login");
+    //     //    navigate('/admin');
+    //     }
+    // },[])
 
     let [tokenstate, setToken] = useState("");
     // let cookies = new Cookies();

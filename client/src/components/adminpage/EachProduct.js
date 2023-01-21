@@ -13,55 +13,77 @@ import {
     Input,
     // Button
 } from '@chakra-ui/react'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {useForm} from "react-hook-form"
 import {Formik, Form, Field} from "formik"
 import { useDisclosure } from '@chakra-ui/react';
 import axios from 'axios';
 import { requestroute } from '../../constants';
 import { useSelector, useDispatch } from 'react-redux';
+import Cookies from 'universal-cookie';
+import { setLoginTrue } from '../../redux/actions/action';
 import { getDatafrombackend } from '../../redux/actions/action';
 function EachProduct({title, image, category, description,price,_id}) {
+    let dispatch = useDispatch();
+    
 
-    const preloadedValues = {
-        title, image, category, description,price,_id
-    }
-
+  
+    // Edit model properties
     const { isOpen, onOpen, onClose } = useDisclosure()
     const initialRef = React.useRef(null)
     const finalRef = React.useRef(null)
 
-    // const {register, handleSubmit} = useForm({
-    //     defaultValues: preloadedValues
-    // })
 
+    let [tokenstate, setToken] = useState("");
+    let cookies = new Cookies();
     
 
+   useEffect(()=>{
+    let token = cookies.get('jwt');
+    // console.log(token);
+    if(token){
+        setLoginTrue(dispatch, true)
+        setToken(token);
+    }
+   },[])
+    
+
+
+
+    
+     // current product properties state
     let [details, setDetails] = useState({
         title, image, category, description, price, _id
     });
 
-    // let handleEdit = (e)=>{
-    //     let {name, value} = e.target.value;
-    //     setDetails({...details, [name]:value});
-    // }
+  
 
-    // let [editedValue, setEdit] = useState({
-    //     ...preloadedValues
-    // });
 
-    let dispatch = useDispatch();
-
+   // getupdated data from the backend and update that to ui
   const getAndSetData = async ()=>{
-    let {data} = await axios.get(`${requestroute}products`);
+   
+    let {data} = await axios.get(`${requestroute}adminproducts`
+    , 
+    {
+      headers : {
+        'Authorization' : "Bearer "+ tokenstate
+      }
+    }
+    );
     console.log(data);
     
     getDatafrombackend(dispatch,data);
   }
 
+
+    // update changed values to backend
     const saveChangesToBackend = async ()=>{
         let postResponse = await axios.patch(`${requestroute}products/${_id}`, {
-            details
+            details,
+            headers : {
+              'Content-Type' : 'application/json',
+              'Authorization' : "bearer "+  tokenstate
+          }
         });
         console.log(postResponse.data);
         getAndSetData();
@@ -70,6 +92,7 @@ function EachProduct({title, image, category, description,price,_id}) {
             
         }, 2000)
     }
+
 
     const onInputChange = (e)=>{
          const {name, value} = e.target;
@@ -80,7 +103,13 @@ function EachProduct({title, image, category, description,price,_id}) {
     const deleteAction = async ()=>{
         
         try{
-            let response = await axios.delete(`${requestroute}product/${_id}`);
+            let response = await axios.delete(`${requestroute}product/${_id}`
+            , {
+              headers : {
+                'Authorization' : "Bearer "+ tokenstate
+              }
+            }
+            );
             console.log(response);
         }catch(err){
             console.log(err);

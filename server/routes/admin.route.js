@@ -71,7 +71,7 @@ route.get("/profile", auth2, async(req, res)=>{
 })
 
 
-route.post("/tokencheck" ,auth ,async (req, res)=>{
+route.post("/tokencheck" ,auth2 ,async (req, res)=>{
     try{
           res.send({message:req.email})
     }catch(err){
