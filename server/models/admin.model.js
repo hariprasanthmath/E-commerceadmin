@@ -4,7 +4,8 @@ let adminSchema = mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    mobile : Number
+    mobile : Number,
+    storename : String
 })
 
 let adminModel = mongoose.model("admin", adminSchema);
