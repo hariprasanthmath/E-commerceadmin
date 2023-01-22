@@ -59,7 +59,7 @@ route.post("/login", async (req, res)=>{
 
 route.get("/profile", auth2, async(req, res)=>{
     try{
-        console.log(req);
+         console.log(req);
          let email = req.email;
          let user = await adminModel.findOne({email});
          console.log(user);
@@ -67,6 +67,20 @@ route.get("/profile", auth2, async(req, res)=>{
     }catch(err){
 
         res.send(err);
+    }
+})
+
+
+route.patch("/profile" , auth, async(req, res)=>{
+    try{
+        let email = req.email;
+        let reqData = req.body.profilestate;
+        console.log(email, reqData);
+        await adminModel.updateOne({email},{$set: {...reqData}});
+        res.send({message:"working"})
+    }catch(err){
+        console.log(err);
+        res.send({message:"working"})
     }
 })
 
