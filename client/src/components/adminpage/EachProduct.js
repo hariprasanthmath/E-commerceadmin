@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { setLoginTrue } from '../../redux/actions/action';
 import { getDatafrombackend } from '../../redux/actions/action';
+import "./eachproductpage.css"
 function EachProduct({title, image, category, description,price,_id}) {
     let dispatch = useDispatch();
     
@@ -111,6 +112,7 @@ function EachProduct({title, image, category, description,price,_id}) {
             }
             );
             console.log(response);
+            getAndSetData();
         }catch(err){
             console.log(err);
         }
@@ -124,6 +126,7 @@ function EachProduct({title, image, category, description,price,_id}) {
   direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
+  className='eachproductcard'
 >
   <Image
     objectFit='cover'

@@ -24,7 +24,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Productadmin from '../components/Productadmin/Productadmin';
 // import Adminpage from '../components/adminpage/Adminpage';
-import Profile from "../components/Profile/Profile"
+import Profile from "../components/Profile/Profile";
+import { sidemenu } from '../constants';
 function Allroutes(props) {
 
     const login = useSelector(myStore => {return myStore.login});
@@ -78,10 +79,12 @@ function Allroutes(props) {
                 <Route path="/create" element={<ChakraProvider><CreateProduct/></ChakraProvider> }></Route>
                 <Route path='/admin' element={<ChakraProvider><Adminpage/></ChakraProvider>}>
                         <Route path='' element={<Navigate to="profile"/>}></Route>
+                        
                         <Route path="profile" element={<Profile/>}></Route>
                         <Route path="analytics" element={<>analytics</>}></Route>
                         <Route path="products" element={<Productadmin/>}></Route>
                         <Route path="create" element={<ChakraProvider><CreateProduct/></ChakraProvider>}></Route>
+                        <Route path="orders" element={<>orders page</>}></Route>
                 </Route>
             {/* <Route path="/admin" element={<ChakraProvider> <Adminpage/> </ChakraProvider>}></Route> */}
            </Routes>
