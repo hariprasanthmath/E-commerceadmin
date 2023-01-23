@@ -28,6 +28,10 @@ export const DashLinkNav = [
       name : "Orders",
       location : "admin/orders"
     },
+    {
+      name : "User view",
+      location : "admin/userview"
+    }
   ]
 
 export const sidemenu = [
@@ -50,5 +54,9 @@ export const sidemenu = [
     {
         name : "Orders",
         path : "orders"
+    },
+    {
+      name : "User view",
+      path : "userview"
     }
 ]

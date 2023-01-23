@@ -20,50 +20,68 @@ import {
     Input,
     // Button
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom';
 import {Formik, Form, Field} from "formik"
+import { isExpired, decodeToken } from "react-jwt";
+import { setLoginTrue } from '../../redux/actions/action';
 import "./adminprofile.css"
 function Profile(props) {
 
 
-    let [tokenstate, setToken] = useState();
+    let [tokenstate, setToken] = useState("");
     let cookies = new Cookies();
     let dispatch = useDispatch();
     let [viewstate, setviewstate] = useState("view");
-
-   useEffect(()=>{
-    let token = cookies.get('jwt');
-    if(token){
-       
-        setToken(token);
-    }
-   },[])
-
+    const navigate = useNavigate();
+    
    let [profilestate, setProfile] = useState({
 
    });
-
    let [profilecurrent, setprofilecurrent] = useState({});
+
+    
+   
+
+   useEffect(()=>{
+    profileHandler();
+
+   },[])
+
+
+ 
     
 
 
     const profileHandler = async () =>{
-        let response = await getAdminProfile(getProfiledetailsRoute, tokenstate);
-        // getProfiledetailsRoute
-        if(response.message === "jwt malformed"){
-            // alert("login again")
-        }else{
-            setProfile(response);
-            setprofilecurrent(response)
-        }
-        
-        console.log(response);
+
+      let token = cookies.get('jwt');
+
+      if(token){
+            // console.log(token);
+            localStorage.setItem("jwt", token);
+            setToken(token);
+      }
+   
+
     }
 
-
-
     useEffect(()=>{
-          profileHandler();
+        getandsetAdminProfile();
     },[tokenstate])
+
+    const getandsetAdminProfile = async ()=>{
+      // console.log(tokenstate);
+      let response = await getAdminProfile(getProfiledetailsRoute, tokenstate);
+      // // getProfiledetailsRoute
+      if(response.message === "jwt malformed"){
+          // alert("login again")
+      }else{
+          setProfile(response);
+          setprofilecurrent(response)
+      }
+
+    }
+
 
     const onInputChange = (e)=>{
         const {name, value} = e.target;
@@ -73,7 +91,7 @@ function Profile(props) {
 
    const saveChangesToBackend = async ()=>{
       
-      console.log(profilestate);
+      // console.log(profilestate);
       let response = await axios.patch(`${requestroute}admin/profile`, 
       {
         profilestate,
@@ -82,7 +100,7 @@ function Profile(props) {
           'Authorization' : "bearer "+  tokenstate
       }
     });
-      console.log(response);
+      // console.log(response);
       profileHandler();
       setviewstate("view");
    }
@@ -126,21 +144,31 @@ function Profile(props) {
              )}
            </Field>
  
-           {/* <Field name='name' >
+           <Field name='storedescription' >
              {({ field, form }) => (
                <FormControl isInvalid={form.errors.name && form.touched.name}>
-                 <FormLabel>Description</FormLabel>
+                 <FormLabel>Store Description</FormLabel>
                  <Textarea {...field} placeholder=''> 
                  
                  </Textarea>
                </FormControl>
              )}
-           </Field> */}
+           </Field>
  
            <Field name='name' >
              {({ field, form }) => (
                <FormControl isInvalid={form.errors.name && form.touched.name}>
                  <FormLabel>Name</FormLabel>
+                 <Input {...field} placeholder='' />
+                 
+               </FormControl>
+             )}
+           </Field>
+
+           <Field name='storelogo' >
+             {({ field, form }) => (
+               <FormControl isInvalid={form.errors.name && form.touched.name}>
+                 <FormLabel>Store logo url</FormLabel>
                  <Input {...field} placeholder='' />
                  
                </FormControl>
