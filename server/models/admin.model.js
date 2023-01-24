@@ -5,7 +5,10 @@ let adminSchema = mongoose.Schema({
     email: String,
     password: String,
     mobile : Number,
-    storename : String
+    storename : String,
+    storedescription : String,
+    storelogo : String,
+    
 })
 
 let adminModel = mongoose.model("admin", adminSchema);

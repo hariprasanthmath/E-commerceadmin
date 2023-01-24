@@ -19,6 +19,7 @@ async function auth(req, res, next){
                 return res.send({message:"not authorized 1"})
             }
         }catch(err){
+            // return   res.redirect('/logout');
             return res.send(err)
         }
     }else{

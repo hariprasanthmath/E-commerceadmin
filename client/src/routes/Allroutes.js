@@ -28,6 +28,8 @@ import Profile from "../components/Profile/Profile";
 import { sidemenu } from '../constants';
 import AdminLogout from '../components/Logout/AdminLogout';
 import Userview from '../components/userview/Userview';
+import StorePage from '../components/Store/StorePage';
+
 function Allroutes(props) {
 
     const login = useSelector(myStore => {return myStore.login});
@@ -77,7 +79,7 @@ function Allroutes(props) {
             <Route path="/login" element={<ChakraProvider> <Loginpage/> </ChakraProvider>}></Route>
             <Route path="/logout" element={<ChakraProvider> <AdminLogout/> </ChakraProvider>}></Route>
             <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route>
-            <Route path="/store" element={<>storepage</>}></Route>
+            
             {/* <Route path="/admin" element={<Navigate to={"/admin"}/>}></Route> */}
                 {/* <Route path="/admin" element={ }></Route> */}
                 <Route path="/create" element={<ChakraProvider><CreateProduct/></ChakraProvider> }></Route>
@@ -90,7 +92,14 @@ function Allroutes(props) {
                         <Route path="create" element={<ChakraProvider><CreateProduct/></ChakraProvider>}></Route>
                         <Route path="orders" element={<>orders page</>}></Route>
                         <Route path="userview" element={<Userview/>}></Route>
+                       
                 </Route>
+                <Route path="/store">
+                            <Route path=":storename" element={<StorePage/>}>
+                                
+                            </Route>
+                </Route>
+                
                 
             {/* <Route path="/admin" element={<ChakraProvider> <Adminpage/> </ChakraProvider>}></Route> */}
             {/* <Route path="/store" element={<ChakraProvider><CreateProduct/></ChakraProvider> }></Route> */}

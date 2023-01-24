@@ -7,11 +7,16 @@ const cors = require("cors");
 const morgan = require("morgan");
 const connect = require("./db/connect")
 const app = express();
+
 const adminRoute = require("./routes/admin.route");
+const userRoute = require("./routes/user.route");
+const storeRoute = require("./routes/store.route");
+
 const auth = require("./middleware/auth")
 const auth2 = require("./middleware/auth2")
 // mongoose model for Product collection
 const ProductModel = require("./db/product.model");
+
 
 app.use(express.json());
 app.use(cors());
@@ -21,6 +26,8 @@ app.use(morgan('tiny'));
 
 app.use(express.static("build"));
 app.use("/admin" , adminRoute);
+app.use("/user", userRoute);
+app.use("/store", storeRoute);
 
 // test route
 app.get("/", (req, res)=>{

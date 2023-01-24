@@ -1,6 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Flex, Text, useMediaQuery, Card, Image, Stack, CardBody, Heading, CardFooter, Button } from '@chakra-ui/react';
 function EachStoreviewcard({storename, storedescription, storelogo}) {
+    
+    
+    const navigate = useNavigate();
+
+    const handleStoreNavigation = () => {
+        navigate(`/store/${storename}`)
+    }
+
     return (
         // <Flex >
             
@@ -32,7 +41,7 @@ function EachStoreviewcard({storename, storedescription, storelogo}) {
           </CardBody>
       
           <CardFooter>
-            <Button variant='solid' colorScheme='blue'>
+            <Button variant='solid' colorScheme='blue' onClick={handleStoreNavigation}>
               Explore Store
             </Button>
           </CardFooter>

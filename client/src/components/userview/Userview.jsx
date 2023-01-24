@@ -4,6 +4,7 @@ import axios from 'axios';
 import { requestroute } from '../../constants';
 import { useEffect } from 'react';
 import EachStoreviewcard from './EachStoreviewcard';
+
 function Userview(props) {
 
     const [storelist, setStorelist] = useState([]);
@@ -24,6 +25,8 @@ function Userview(props) {
         getAllStoresname();
 
     },[])
+
+
     return (
 
 
