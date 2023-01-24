@@ -21,6 +21,7 @@ async function auth2(req, res, next){
             }
         }catch(err){
             console.log(err);
+        //    return res.redirect('/logout');
             return res.send(err)
         }
     }else{
