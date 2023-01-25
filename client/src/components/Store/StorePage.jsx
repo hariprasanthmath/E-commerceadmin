@@ -4,6 +4,8 @@ import axios from 'axios';
 import { requestroute } from '../../constants';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Productcardview from '../Productcard/Productcardview';
+import "./cardscontainer.css"
 
 function StorePage(props) {
 
@@ -29,8 +31,15 @@ function StorePage(props) {
    
 
     return (
-        <div>
-            this is storepage
+        <div style={{marginTop:"60px"}} className='cardscontainer'>
+           {
+            currentpageData?.map((eachProduct)=>{
+                return (
+                    <Productcardview name={eachProduct.title} imageURL={eachProduct.image} price={eachProduct.price}/>
+                    // <h1>hello</h1>
+                )
+            })
+           }
         </div>
     );
 }

@@ -1,0 +1,47 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+.productcard > img{
+    width: 200px;
+}
+.productcard{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    border: 2px solid #fc8181;
+    margin: 10px;
+}
+
+.bottomcard{
+    margin-top: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    background-color: #fc8181;
+
+}
+
+.addtocartbutton{
+    background-color: black;
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.addtocartwithsymbol{
+    display: flex;
+    flex-direction: row;
+    background-color: black;
+    padding: 5px;
+    border-radius: 4px;
+    color: white;
+    min-width: 80px;
+    justify-content: space-around;
+}
