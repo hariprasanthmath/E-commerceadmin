@@ -1,22 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./productcard.css"
-function Productcardview({name, imageURL, price}) {
+import {useSelector} from "react-redux"
+import { decreaseProductCountFromCart, addProductToCart } from '../../redux/actions/action';
+import { getCurrentProductCount } from '../../utils/getCurrentProductCount';
+import { useDispatch } from 'react-redux';
+function Productcardview({category, description, image, price, owner, title, _id}) {
 
-    let [count, seCount] = useState(0);
+    console.log({category, description, image, price, owner, title, _id});
+     let {cartData} = useSelector((myStore)=> {return myStore});
+     let [count, setCount] = useState(0);
+     let dispatch = useDispatch();
+
     const decreasecount = ()=>{
-        
+      decreaseProductCountFromCart(dispatch, {category, description, image, price, owner, title, _id, count}, false)
     }
     const increasecount = ()=>{
-
+      addProductToCart(dispatch, {category, description, image, price, owner, title, _id, count}, true)
     }
     const handleaddtocart = ()=>{
-        
+      addProductToCart(dispatch, {category, description, image, price, owner, title, _id, count}, true)
     }
 
+    const getCount = ()=>{
+       let currentcount = getCurrentProductCount(cartData, _id);
+       setCount(currentcount);
+    }
+
+    useEffect(()=>{
+      getCount()
+    },[cartData])
+
     return (
-        <div className='productcard'>
-        <img src={imageURL} alt={name}></img>
-        <p>{name}</p>
+        <div key={_id} className='productcard'>
+        <img src={image} alt={title}></img>
+        <p>{title}</p>
         <div className='bottomcard'>
            <h3>{price}</h3>
            {

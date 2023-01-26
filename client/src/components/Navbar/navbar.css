@@ -1,17 +1,26 @@
 #navbar{
+    
     display: flex;
+    width: 90%;
+    margin: auto;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
+}
+
+.navcontainer{
+    
     box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+    /* padding: 0px 10%; */
 }
 
 #navbar>a>img{
     width: 15%
+    
 }
 
-#navbar > div{
+.loginregister{
     display: flex;
     gap: 10px;
 }

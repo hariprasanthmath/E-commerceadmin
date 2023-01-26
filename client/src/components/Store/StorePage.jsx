@@ -35,7 +35,7 @@ function StorePage(props) {
            {
             currentpageData?.map((eachProduct)=>{
                 return (
-                    <Productcardview name={eachProduct.title} imageURL={eachProduct.image} price={eachProduct.price}/>
+                    <Productcardview {...eachProduct}/>
                     // <h1>hello</h1>
                 )
             })

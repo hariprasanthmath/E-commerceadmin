@@ -20,3 +20,17 @@ export const setjwtToken = (dispatch, data) => {
     payload : data 
   })
 }
+
+export const addProductToCart = (dispatch, data) =>{
+  dispatch({
+    type: "ADDPRODUCTTOCART",
+    payload : data
+  })
+}
+
+export const decreaseProductCountFromCart = (dispatch, data) =>{
+   dispatch({
+    type : "DECREASEFROMCART",
+    payload : data
+   })
+}

@@ -1,7 +1,10 @@
+import { setDataToCart } from "../../utils/setCartData"
+
 const initialState = {
     productData : [],
     login : false,
-    jwt : ""
+    jwt : "",
+    cartData : []
 }
 
 export const productReducer = (state = initialState, action)=>{
@@ -21,8 +24,19 @@ export const productReducer = (state = initialState, action)=>{
                 ...state,
                 jwt : action.payload
             }
+        case "ADDPRODUCTTOCART" : 
+            return {
+                ...state,
+                cartData : setDataToCart(state.cartData, action.payload, true)
+            }
+        case "DECREASEFROMCART" : {
+            return {
+                ...state,
+                cartData : setDataToCart(state.cartData, action.payload, false)
+            }
+        }
         default : 
-        return state;
+         return state;
     }
 }
 
