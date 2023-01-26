@@ -6,7 +6,7 @@ import { getCurrentProductCount } from '../../utils/getCurrentProductCount';
 import { useDispatch } from 'react-redux';
 function Productcardview({category, description, image, price, owner, title, _id}) {
 
-    console.log({category, description, image, price, owner, title, _id});
+   //  console.log({category, description, image, price, owner, title, _id});
      let {cartData} = useSelector((myStore)=> {return myStore});
      let [count, setCount] = useState(0);
      let dispatch = useDispatch();
@@ -40,9 +40,9 @@ function Productcardview({category, description, image, price, owner, title, _id
               count > 0 ?
 
               <div className='addtocartwithsymbol'>
-                 <div onClick={decreasecount}>-</div>
+                 <div className='increasedecrease' onClick={decreasecount}>-</div>
                  <div>{count}</div>
-                 <div onClick={increasecount}>+</div>
+                 <div className='increasedecrease' onClick={increasecount}>+</div>
               </div> :
               <div className='addtocartbutton' onClick={handleaddtocart}>
                <p>ADD TO Cart</p>

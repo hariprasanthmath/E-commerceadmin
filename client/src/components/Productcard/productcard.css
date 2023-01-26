@@ -45,3 +45,7 @@
     min-width: 80px;
     justify-content: space-around;
 }
+
+.increasedecrease{
+    cursor: pointer;
+}
