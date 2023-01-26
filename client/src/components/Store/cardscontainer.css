@@ -1,0 +1,13 @@
+.cardscontainer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+@media screen and (max-width: 767px){
+    .cardscontainer{
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+    }
+}
