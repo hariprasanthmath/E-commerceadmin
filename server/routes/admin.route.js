@@ -2,6 +2,7 @@ const express = require("express");
 const route = express.Router();
 const jwt = require("jsonwebtoken");
 const adminModel = require("../models/admin.model")
+const cartModel = require("../models/cart.model");
 const auth = require("../middleware/auth")
 const config = require("../config/index")
 const auth2 = require("../middleware/auth2")
@@ -89,6 +90,19 @@ route.post("/tokencheck" ,auth2 ,async (req, res)=>{
     try{
           res.send({message:req.email})
     }catch(err){
+
+    }
+})
+
+route.get("/cart" , auth2 , async (req, res)=>{
+    try{
+        
+        let email = req.email;
+        let cart = await cartModel.find({StoreEmail:email});
+        res.send(cart);
+
+    }catch(err){
+        res.send(err);
 
     }
 })
