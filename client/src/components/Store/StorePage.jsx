@@ -8,7 +8,8 @@ import Productcardview from '../Productcard/Productcardview';
 import "./cardscontainer.css"
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
-
+import { Button, Box, Stack, useMediaQuery} from '@chakra-ui/react';
+import StoreNavbar from './StoreNavbar';
 import {
     Drawer,
     DrawerBody,
@@ -18,19 +19,26 @@ import {
     DrawerContent,
     DrawerCloseButton,
   } from '@chakra-ui/react'
+  import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from '@chakra-ui/react';
 import { useDisclosure } from '@chakra-ui/react';
+import Cart from './Cartandaddress/Cart';
+import CheckOut from './Cartandaddress/CheckOut';
+
 function StorePage(props) {
     
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [isLargerThan800] = useMediaQuery('(min-width: 800px)')
     const {storename} = useParams();
     let {cartData} = useSelector((myStore)=> {return myStore});
     let [StoreEmail, setStoreEmail] = useState("");
-    useEffect(()=>{
-        getStoreData();
-    },[])
-
     const [currentpageData, setCurrpageData] = useState();
-    
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [cartPage, setcartPage] = useState(true);
+    // const firstField = React.useRef()
+
+  
+   
+
+   
 
     const getStoreData =  async () =>{
          let {data} = await axios.get(`${requestroute}store/${storename}`)
@@ -39,14 +47,7 @@ function StorePage(props) {
          setStoreEmail(data.email)
     }
 
-    const [userData, setUserData] = useState({
-        name : "testname",
-        phone : "1234567890",
-        Address : "120 test",
-        state : "test state",
-        city : "test city",
-        deliveryinstructions : "test instruction"
-    });
+  
 
    const designCart = {
     width:"40px",
@@ -55,42 +56,31 @@ function StorePage(props) {
     bottom:"10px",
     right:"10px", 
     borderRadius:"4px",
-    backgroundColor:"green"
+    backgroundColor:"#fc8181",
+    cursor : "pointer",
+    display : "flex",
+    justifyContent : "center",
+    alignItems: "center"
     }
     
-    const handleOrderSubmit = async ()=>{
-        let orderData = {
-            orderid : uuidv4(),
-            cartData,
-            userData,
-            StoreEmail
-            
-        }
-      
-       try{
+  
 
-        let response = await axios.post(`${requestroute}store/neworder`, {
-            orderData,
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-        })
-
-
-        console.log(orderData, response);
-       }catch(err){
-           console.log(err);
-       }
-
-
-      
-        // onOpen();
+    const setCart = ()=>{
+        setcartPage(!cartPage);
     }
 
-   
+    useEffect(()=>{
+        getStoreData();
+    },[])
 
     return (
-        <div style={{marginTop:"60px"}} className='cardscontainer'>
+        <>
+        
+        {
+            cartPage ? 
+
+            <Box style={{marginTop:"60px"}} className='cardscontainer'>
+         
            {
             currentpageData?.map((eachProduct)=>{
                 return (
@@ -99,9 +89,83 @@ function StorePage(props) {
                 )
             })
            }
-        <div style={designCart} onClick={handleOrderSubmit}>cart</div>
+     
 
-        <Drawer onClose={onClose} isOpen={isOpen} size={"lg"}>
+        </Box> :
+
+        <Box style={{marginTop:"80px"}}>
+
+            <Stack direction={isLargerThan800 ? 'row' : 'column' } spacing="24px" style={{margin:"auto",width:isLargerThan800?"70%":"95%"}}>
+            
+                <Box style={{margin:"auto",width:isLargerThan800 ?  "60%":"100%"  }}>
+                {
+                cartData.length > 0 && cartData.map((eachData)=>{
+                      return (
+                          <Cart {...eachData}/>
+                      )
+                })
+               }
+                </Box>
+                <Box style={{margin:"auto",width:isLargerThan800?"40%":"100%",marginTop:"0px"}}>
+
+                    <CheckOut StoreEmail={StoreEmail} />
+
+                </Box>
+
+            </Stack>
+        </Box>
+
+        }
+
+           <Box style={designCart} onClick={setCart}>{cartPage?"Cart":"Buy"}</Box>
+
+        {/* <Modal isOpen={isOpen} onClose={onClose} size="md">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+             <h1>body</h1>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme='blue' mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant='ghost'>Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal> */}
+
+
+        {/* <Drawer
+        isOpen={isOpen}
+        placement='right'
+        // initialFocusRef={firstField}
+        onClose={onClose}
+        size="md"
+      >
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader borderBottomWidth='1px'>
+            Create a new account
+          </DrawerHeader>
+
+          <DrawerBody>
+           
+          </DrawerBody>
+
+          <DrawerFooter borderTopWidth='1px'>
+            <Button variant='outline' mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme='blue'>Submit</Button>
+          </DrawerFooter>
+        </DrawerContent>
+      </Drawer> */}
+
+        {/* <Drawer onClose={onClose} isOpen={isOpen} size={"lg"} style={{zindex:"100"}}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
@@ -118,9 +182,8 @@ function StorePage(props) {
             </p>
           </DrawerBody>
         </DrawerContent>
-      </Drawer>
-
-        </div>
+      </Drawer> */}
+        </>
     );
 }
 

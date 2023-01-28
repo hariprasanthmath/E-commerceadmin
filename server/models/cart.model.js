@@ -3,9 +3,11 @@ const mongoose = require("mongoose");
 let cartSchema = mongoose.Schema({
     orderid : String,
     cartData : Array,
+    status : String,
     userData : {
         name : String,
         phone : Number,
+        email : String,
         Address : String,
         state : String,
         city : String,

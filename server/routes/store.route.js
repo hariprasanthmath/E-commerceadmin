@@ -22,7 +22,8 @@ storeRoute.get("/:storename", async (req, res)=>{
 storeRoute.post("/neworder" , async (req, res)=>{
 
    try{
-
+      
+      req.body.orderData.status = "new";
       let response = await cartModel.create(req.body.orderData);
       console.log(req.body.orderData);
       res.status(201).send({result:response});

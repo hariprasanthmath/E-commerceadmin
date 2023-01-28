@@ -29,6 +29,7 @@ import { sidemenu } from '../constants';
 import AdminLogout from '../components/Logout/AdminLogout';
 import Userview from '../components/userview/Userview';
 import StorePage from '../components/Store/StorePage';
+import Orders from '../components/OrdersPage/Orders';
 
 function Allroutes(props) {
 
@@ -90,12 +91,12 @@ function Allroutes(props) {
                         <Route path="analytics" element={<>analytics</>}></Route>
                         <Route path="products" element={<Productadmin/>}></Route>
                         <Route path="create" element={<ChakraProvider><CreateProduct/></ChakraProvider>}></Route>
-                        <Route path="orders" element={<>orders page</>}></Route>
-                        <Route path="userview" element={<Userview/>}></Route>
+                        <Route path="orders" element={<ChakraProvider><Orders/></ChakraProvider>}></Route>
+                        <Route path="userview" element={<ChakraProvider><Userview/></ChakraProvider>}></Route>
                        
                 </Route>
                 <Route path="/store">
-                            <Route path=":storename" element={<StorePage/>}>
+                            <Route path=":storename" element={<ChakraProvider><StorePage/></ChakraProvider>}>
                                 
                             </Route>
                 </Route>
