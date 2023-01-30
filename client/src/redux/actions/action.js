@@ -34,3 +34,10 @@ export const decreaseProductCountFromCart = (dispatch, data) =>{
     payload : data
    })
 }
+
+export const removeCartData = (dispatch)=>{
+  dispatch({
+    type:"REMOVECARTDATA",
+    
+  })
+}

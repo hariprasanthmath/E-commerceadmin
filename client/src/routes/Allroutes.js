@@ -30,6 +30,7 @@ import AdminLogout from '../components/Logout/AdminLogout';
 import Userview from '../components/userview/Userview';
 import StorePage from '../components/Store/StorePage';
 import Orders from '../components/OrdersPage/Orders';
+import TrackOrderPage from '../components/TrackOrder/TrackOrderPage';
 
 function Allroutes(props) {
 
@@ -79,8 +80,8 @@ function Allroutes(props) {
             <Route path="/" element={login ? <Navigate to={"/admin"}/> : <ChakraProvider> <LandingPage/> </ChakraProvider>}></Route>
             <Route path="/login" element={<ChakraProvider> <Loginpage/> </ChakraProvider>}></Route>
             <Route path="/logout" element={<ChakraProvider> <AdminLogout/> </ChakraProvider>}></Route>
-            <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route>
-            
+            <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route> 
+            <Route path="/trackorder" element={<ChakraProvider> <TrackOrderPage/> </ChakraProvider>}></Route> 
             {/* <Route path="/admin" element={<Navigate to={"/admin"}/>}></Route> */}
                 {/* <Route path="/admin" element={ }></Route> */}
                 <Route path="/create" element={<ChakraProvider><CreateProduct/></ChakraProvider> }></Route>

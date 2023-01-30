@@ -29,12 +29,18 @@ export const productReducer = (state = initialState, action)=>{
                 ...state,
                 cartData : setDataToCart(state.cartData, action.payload, true)
             }
-        case "DECREASEFROMCART" : {
+        case "DECREASEFROMCART" : 
             return {
                 ...state,
                 cartData : setDataToCart(state.cartData, action.payload, false)
             }
-        }
+        
+        case "REMOVECARTDATA" : 
+            return {
+                ...state,
+                cartData : []
+            }
+        
         default : 
          return state;
     }
