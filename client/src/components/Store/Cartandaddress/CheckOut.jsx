@@ -7,11 +7,13 @@ import { requestroute } from '../../../constants';
 import { useState } from 'react';
 import { findCartTotal } from '../../../utils/findCartTotal';
 import { useEffect } from 'react';
+import { removeCartData } from '../../../redux/actions/action';
+import { useDispatch } from 'react-redux';
 function CheckOut({StoreEmail}) {
 
     let {cartData} = useSelector((myStore)=> {return myStore});
     const [cartTotal, setCartTotal] = useState(0);
-
+    const dispatch = useDispatch();
     const [userData, setUserData] = useState({
         name : "",
         email : "",
@@ -55,7 +57,8 @@ function CheckOut({StoreEmail}) {
 
 
         console.log(orderData, response);
-
+        
+        removeCartData(dispatch);
         // resetCart();
 
        }catch(err){

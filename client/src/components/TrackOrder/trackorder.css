@@ -1,0 +1,7 @@
+.trackOrdersearch{
+    display: flex;
+    flex-direction: row;
+    width:60%;
+    margin : auto;
+    margin-top: 50px;
+}

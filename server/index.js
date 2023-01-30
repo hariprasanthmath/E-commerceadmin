@@ -11,6 +11,7 @@ const app = express();
 const adminRoute = require("./routes/admin.route");
 const userRoute = require("./routes/user.route");
 const storeRoute = require("./routes/store.route");
+const cartRoute = require("./routes/cart.route")
 
 const auth = require("./middleware/auth")
 const auth2 = require("./middleware/auth2")
@@ -28,6 +29,7 @@ app.use(express.static("build"));
 app.use("/admin" , adminRoute);
 app.use("/user", userRoute);
 app.use("/store", storeRoute);
+app.use("/cart", cartRoute);
 
 // test route
 app.get("/", (req, res)=>{
