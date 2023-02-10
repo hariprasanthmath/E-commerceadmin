@@ -79,6 +79,7 @@ function Allroutes(props) {
            <Routes>
             <Route path="/" element={login ? <Navigate to={"/admin"}/> : <ChakraProvider> <LandingPage/> </ChakraProvider>}></Route>
             <Route path="/login" element={<ChakraProvider> <Loginpage/> </ChakraProvider>}></Route>
+            <Route path="userview" element={<ChakraProvider><Userview/></ChakraProvider>}></Route>
             <Route path="/logout" element={<ChakraProvider> <AdminLogout/> </ChakraProvider>}></Route>
             <Route path="/register" element={<ChakraProvider> <RegistrationPage/> </ChakraProvider>}></Route> 
             <Route path="/trackorder" element={<ChakraProvider> <TrackOrderPage/> </ChakraProvider>}></Route> 

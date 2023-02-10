@@ -24,6 +24,8 @@ import Cookies from 'universal-cookie';
 import { setLoginTrue } from '../../redux/actions/action';
 import { getDatafrombackend } from '../../redux/actions/action';
 import "./eachproductpage.css"
+import {motion} from "framer-motion"
+
 function EachProduct({title, image, category, description,price,_id}) {
     let dispatch = useDispatch();
     
@@ -121,9 +123,17 @@ function EachProduct({title, image, category, description,price,_id}) {
 
     return (
         <>
+
+        <motion.div
+          initial={{y:"100"}}
+          animate={{ y:0}}
+          transition={{ delay : 0, duration: 1}}
+        >
+         
+
          <Card
          key={_id}
-  direction={{ base: 'column', sm: 'row' }}
+         direction={{ base: 'column', sm: 'row' }}
   overflow='hidden'
   variant='outline'
   className='eachproductcard'
@@ -157,7 +167,9 @@ function EachProduct({title, image, category, description,price,_id}) {
       </Button>
     </CardFooter>
   </Stack>
-</Card>
+         </Card>
+
+         </motion.div>
  
 <Modal
         initialFocusRef={initialRef}

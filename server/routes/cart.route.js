@@ -13,7 +13,7 @@ cartRoute.patch("/orderstatus/:orderid", async(req, res)=>{
     try{
         let orderid = req.params.orderid;
         let status = req.body.nextStatus;
-        console.log(orderid, status);
+        // console.log(orderid, status);
 
         await cartModel.updateOne({orderid},{$set:{status}});
         res.send("success");

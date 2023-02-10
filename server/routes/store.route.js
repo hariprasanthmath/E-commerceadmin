@@ -14,7 +14,7 @@ storeRoute.get("/:storename", async (req, res)=>{
 
     let {email} = await adminModel.findOne({storename}).select("email");
     let allProducts = await ProductModel.find({owner:email});
-        console.log(allProducts);
+      //   console.log(allProducts);
         res.status(201).send({allProducts,email});
     
  }catch(err){
@@ -28,8 +28,8 @@ storeRoute.post("/neworder" , async (req, res)=>{
       
       req.body.orderData.status = "new";
       let response = await cartModel.create(req.body.orderData);
-      console.log(req.body.orderData);
-      console.log(process.env.EMAILPASSWORD);
+      // console.log(req.body.orderData);
+      // console.log(process.env.EMAILPASSWORD);
       const transporter = nodemailer.createTransport( {
          service : "hotmail",
          auth : {
@@ -50,7 +50,7 @@ storeRoute.post("/neworder" , async (req, res)=>{
             console.log(err);
             return
          }
-         console.log("sent "+ info.response);
+         // console.log("sent "+ info.response);
       })
 
       res.status(201).send({result:response});

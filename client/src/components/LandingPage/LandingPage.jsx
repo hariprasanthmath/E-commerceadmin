@@ -8,7 +8,7 @@ function LandingPage(props) {
         <div id="maincontainer">
             <HStack>
                <MainCard/>
- 
+               
             </HStack>
             
         </div>

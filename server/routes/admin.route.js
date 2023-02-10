@@ -8,7 +8,7 @@ const config = require("../config/index")
 const auth2 = require("../middleware/auth2")
 
 route.get("/", (req, res)=>{
-    console.log("admin route");
+    // console.log("admin route");
     res.send({message:"success"});
 })
 
@@ -17,8 +17,8 @@ route.post("/register" ,async (req, res)=>{
         const {name, email, password, mobile} = req.body.formstate;
         const alreadyRegistered = await adminModel.findOne({email});
         // const alreadyRegisteredcount =  adminModel.find({email}).count;
-        console.log(alreadyRegistered);
-        console.log(name, email);
+        // console.log(alreadyRegistered);
+        // console.log(name, email);
         if(alreadyRegistered){
             res.send({message:"Account already present"});
         }else{
@@ -41,9 +41,9 @@ route.post("/login", async (req, res)=>{
        
        if(admin){
          let passwordMatch = admin.password == password;
-         console.log(passwordMatch);
+        //  console.log(passwordMatch);
         if(passwordMatch) {
-             console.log(email);
+            //  console.log(email);
          let token = jwt.sign({email}, config.JWTKEY, {expiresIn : config.JWTEXPIRETIME});
          res.status(201).send({token});
         }else{
@@ -60,10 +60,10 @@ route.post("/login", async (req, res)=>{
 
 route.get("/profile", auth2, async(req, res)=>{
     try{
-         console.log(req);
+        //  console.log(req);
          let email = req.email;
          let user = await adminModel.findOne({email});
-         console.log(user);
+        //  console.log(user);
          res.send(user);
     }catch(err){
 
@@ -76,11 +76,11 @@ route.patch("/profile" , auth, async(req, res)=>{
     try{
         let email = req.email;
         let reqData = req.body.profilestate;
-        console.log(email, reqData);
+        // console.log(email, reqData);
         await adminModel.updateOne({email},{$set: {...reqData}});
         res.send({message:"working"})
     }catch(err){
-        console.log(err);
+        // console.log(err);
         res.send({message:"working"})
     }
 })

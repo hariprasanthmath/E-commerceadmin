@@ -13,6 +13,16 @@ const userRoute = require("./routes/user.route");
 const storeRoute = require("./routes/store.route");
 const cartRoute = require("./routes/cart.route")
 
+// file upload requirements
+const fs = require('fs')
+const util = require('util')
+const unlinkFile = util.promisify(fs.unlink)
+
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
+
+const { uploadFile, getFileStream } = require('./s3')
+
 const auth = require("./middleware/auth")
 const auth2 = require("./middleware/auth2")
 // mongoose model for Product collection
@@ -44,7 +54,7 @@ app.post("/product", auth, async (req, res)=>{
     try{
         let reqData = req.body.productdata;
         let email = req.email;
-        console.log(reqData);
+        // console.log(reqData);
         reqData.owner = email;
         const result = await ProductModel.create(reqData)
         res.status(201).send("Registered Successfully");
@@ -59,7 +69,7 @@ app.get("/products", async(req, res)=>{
     try{
         
         let allProducts = await ProductModel.find();
-        console.log(allProducts);
+        // console.log(allProducts);
         res.status(201).send(allProducts);
 
     }
@@ -73,7 +83,7 @@ app.get("/adminproducts" , auth2, async (req, res)=>{
     
     try{
         let email = req.email;
-        console.log(email);
+        // console.log(email);
         let allProducts = await ProductModel.find({owner:email});
         console.log(allProducts);
         res.status(201).send(allProducts);
@@ -94,7 +104,7 @@ app.patch("/products/:_id", auth, async (req, res)=>{
        let email = req.email;
        let _id = req.params._id;
        let reqData = req.body.details;
-       console.log(_id, reqData);
+    //    console.log(_id, reqData);
 
        await ProductModel.updateOne({_id, owner:email},{$set: {...reqData}});
        
@@ -133,6 +143,42 @@ app.delete("/product/:_id", auth2,  async (req, res)=>{
 
     }
 })
+
+// post image file to backend
+app.post('/image', upload.single('image'), async (req, res) => {
+    try{
+
+        const file = req.file
+    console.log(file)
+  
+    // apply filter
+    // resize 
+  
+    const result = await uploadFile(file)
+    await unlinkFile(file.path)
+    console.log(result)
+    const description = req.body.description
+
+    console.log(description);
+    res.send({imagePath: `${result.Key}`})
+    // const readStream = getFileStream(result.Key);
+    // readStream.pipe(res)
+    // res.send("success")
+
+    }catch(err){
+        
+        console.log(err);
+        res.send(err);
+    }
+  })
+
+  app.get('/images/:key', (req, res) => {
+    console.log(req.params.key, "key value")
+    const key = req.params.key
+    const readStream = getFileStream(key)
+  
+    readStream.pipe(res)
+  })
 
 
 // connection to database - if connected then app will listen in port 5000

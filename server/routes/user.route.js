@@ -9,7 +9,7 @@ userRoute.get("/storelist", async (req, res)=>{
     try{
 
         let details = await adminModel.find().select('_id storename storelogo email storedescription')
-        console.log(details);
+        // console.log(details);
 
        
         res.send({data:details});
