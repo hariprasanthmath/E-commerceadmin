@@ -64,9 +64,11 @@ function CreateProduct(props) {
 
         })
 
+        
+
         if(allPresent){
             try{
-
+                // productdata.image = imageRef.current.value;
                 let response = await axios.post(`${requestroute}product`, {
                     productdata,
                     headers : {
