@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 // const { resolve } = require("path");
 require("dotenv").config();
 async function  connect() {
-    console.log(process.env.DB);
+    // console.log(process.env.DB);
    return new Promise((resolve, reject)=>{
      
      mongoose.connect(process.env.DB, (err)=>{

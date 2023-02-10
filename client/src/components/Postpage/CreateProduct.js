@@ -8,7 +8,20 @@ import Navbar from '../Navbar/Navbar';
 import Cookies from "universal-cookie"
 import { useDispatch } from 'react-redux';
 import { setLoginTrue } from '../../redux/actions/action';
+import App from '../ImageUpload/App';
 function CreateProduct(props) {
+    const imageRef = useRef();
+    const [images, setImages] = useState(null)
+    const imageBox = {
+
+        // border: "2px solid crimson",
+
+        // width: "50%"
+        // padding: "2px",
+        // borderRadius: "4px"
+
+    }
+
     const InputStyle = {
         maxWidth: "500px" 
     }
@@ -82,6 +95,10 @@ function CreateProduct(props) {
          setProductdata({...productdata, [name]:value});
     }
 
+    useEffect(()=>{
+        imageRef.current.value = images;
+    },[images])
+
 
 
     return (
@@ -91,12 +108,18 @@ function CreateProduct(props) {
         <VStack onChange={handleInputChange}>
           <Input placeholder='enter product title' name="title" style={InputStyle} required/>
           <Input placeholder='Description' style={InputStyle} name="description" required/>
-          <Input placeholder='Image' style={InputStyle} name="image" required/>
+           <Box style={imageBox}>
+             <Input ref={imageRef} placeholder='Image' style={InputStyle} name="image" required/>
+             <App setImages={setImages} images={images}/>
+           </Box>
           <Input placeholder='price' type="number" style={InputStyle} name="price" required/>
           <Input placeholder='category' style={InputStyle} name="category" required/>
           <Button onClick={handleSubmitCreateProduct}>Create Product</Button>
        </VStack>
         </Box>
+        
+        
+
       </>
     );
 }
