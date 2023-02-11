@@ -2,6 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { requestroute } from '../../constants';
 import { Button, Input } from '@chakra-ui/react';
+import Compressor from "compressorjs"
 // import { ChakraProvider } from '@chakra-ui/react';
 // import './App.css'
 
@@ -30,7 +31,16 @@ function App({images, setImages}) {
 
   const fileSelected = event => {
     const file = event.target.files[0]
-    setFile(file)
+    new Compressor(file, {
+      quality: 0.2, // 0.6 can also be used, but its not recommended to go below.
+      success: (compressedResult) => {
+        // compressedResult has the compressed file.
+        // Use the compressed file to upload the images to your server.        
+       
+        setFile(compressedResult)
+      },
+    });
+    
   }
 
   return (

@@ -56,6 +56,7 @@ function CreateProduct(props) {
         let productvalues = Object.values(productdata);
         let allPresent = true;
         productvalues.map((eachElement)=>{
+            console.log(eachElement);
             if( eachElement.length == 0 ){
 
                 allPresent = false;
@@ -68,8 +69,8 @@ function CreateProduct(props) {
 
         if(allPresent){
             try{
-                // productdata.image = imageRef.current.value;
-                let response = await axios.post(`${requestroute}product`, {
+                //  productdata.image = `${requestroute}images/${imageRef.current.value}`;
+                 let response = await axios.post(`${requestroute}product`, {
                     productdata,
                     headers : {
                         'Content-Type' : 'application/json',
@@ -98,7 +99,12 @@ function CreateProduct(props) {
     }
 
     useEffect(()=>{
-        imageRef.current.value = images;
+        if(images){
+            imageRef.current.value = `${requestroute}images/${images}`
+        }
+       
+        let imageUrl = `${requestroute}images/${images}`
+        setProductdata({...productdata,image:imageUrl})
     },[images])
 
 
