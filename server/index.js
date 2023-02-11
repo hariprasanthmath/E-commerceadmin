@@ -14,6 +14,16 @@ const storeRoute = require("./routes/store.route");
 const cartRoute = require("./routes/cart.route")
 
 // file upload requirements
+
+
+
+
+
+
+
+// const { uploadFile, getFileStream } = require('./s3')
+
+
 const fs = require('fs')
 const util = require('util')
 const unlinkFile = util.promisify(fs.unlink)
