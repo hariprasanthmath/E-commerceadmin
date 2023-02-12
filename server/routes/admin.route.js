@@ -35,6 +35,7 @@ route.post("/register" ,async (req, res)=>{
 })
 
 route.post("/login", async (req, res)=>{
+    console.log("logging");
     try{
        const {email, password} = req.body.formstate;
        let admin = await adminModel.findOne({email});

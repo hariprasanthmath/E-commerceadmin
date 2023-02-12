@@ -1,4 +1,6 @@
 export const requestroute = "http://localhost:5000/"
+// http://192.168.15.196:5000/ 
+// "http://localhost:5000/"
 //"https://e-commerceadmin-hariprasanthmath.vercel.app/";
 // "http://localhost:5000/"
 

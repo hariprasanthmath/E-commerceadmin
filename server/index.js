@@ -16,7 +16,7 @@ const cartRoute = require("./routes/cart.route")
 // file upload requirements
 
 
-
+// app.use(express.static('build'));
 
 
 
@@ -189,6 +189,11 @@ app.post('/image', upload.single('image'), async (req, res) => {
   
     readStream.pipe(res)
   })
+
+//   app.all('/*', (req, res, next) => {
+//     const indexFile = path.join(__dirname, 'build', 'index.html');
+//     res.sendFile(indexFile);
+// })
 
 
 // connection to database - if connected then app will listen in port 5000
