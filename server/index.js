@@ -52,10 +52,10 @@ app.use("/store", storeRoute);
 app.use("/cart", cartRoute);
 
 // test route
-app.get("/", (req, res)=>{
-    console.log("get to main route");
-    res.send({message:"main route"})
-})
+// app.get("/", (req, res)=>{
+//     console.log("get to main route");
+//     res.send({message:"main route"})
+// })
 
 
 
@@ -190,10 +190,10 @@ app.post('/image', upload.single('image'), async (req, res) => {
     readStream.pipe(res)
   })
 
-//   app.all('/*', (req, res, next) => {
-//     const indexFile = path.join(__dirname, 'build', 'index.html');
-//     res.sendFile(indexFile);
-// })
+  app.all('/*', (req, res, next) => {
+    const indexFile = path.join(__dirname, 'build', 'index.html');
+    res.sendFile(indexFile);
+})
 
 
 // connection to database - if connected then app will listen in port 5000
