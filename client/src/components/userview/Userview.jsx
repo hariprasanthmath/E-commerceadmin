@@ -4,10 +4,13 @@ import axios from 'axios';
 import { requestroute } from '../../constants';
 import { useEffect } from 'react';
 import EachStoreviewcard from './EachStoreviewcard';
+import { removeCartData } from '../../redux/actions/action';
+import { useDispatch } from 'react-redux';
 
 function Userview(props) {
 
     const [storelist, setStorelist] = useState([]);
+    let dispatch = useDispatch();
 
     const getAllStoresname = async ()=>{
            
@@ -23,7 +26,7 @@ function Userview(props) {
 
     useEffect(()=>{
         getAllStoresname();
-
+        removeCartData(dispatch);
     },[])
 
 

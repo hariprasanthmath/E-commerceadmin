@@ -82,12 +82,12 @@ function Loginpage(props) {
             
             </Input >
             <label for="password">Password</label>
-            <Input id="password" name="password">
+            <Input id="password" name="password" type="password">
             
             </Input>
             
             
-            <Button className="registerbutton" onClick={handleRegister}>Register</Button>
+            <Button className="registerbutton" onClick={handleRegister}>Login</Button>
             
 
 

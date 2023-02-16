@@ -35,7 +35,7 @@ function Productcardview({category, description, image, price, owner, title, _id
         <img src={image} alt={title}></img>
         <p>{title}</p>
         <div className='bottomcard'>
-           <h3>{price}</h3>
+           <h3>Rs.{price}</h3>
            {
               count > 0 ?
 
