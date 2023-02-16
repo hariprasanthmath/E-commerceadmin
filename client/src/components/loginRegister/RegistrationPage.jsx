@@ -4,8 +4,13 @@ import { Container, Input, Box, Heading, Button } from '@chakra-ui/react';
 import "./Registeration.css"
 import axios from "axios";
 import { registeruserRoute } from '../../constants';
-function RegistrationPage(props) {
+// import { useToast } from '@chakra-ui/react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+function RegistrationPage(props) {
+    
+    // const toast = useToast()
     let [formstate, setFormState] = useState({
         name :"",
         email : "",
@@ -21,6 +26,21 @@ function RegistrationPage(props) {
        })
     }
 
+//    const customToast = (message) =>{
+         
+//     toast({
+//         title: message,
+//         description: "",
+//         status: 'failure',
+//         duration: 9000,
+//         isClosable: true,
+//       })
+
+//    }
+
+const notify = (message) => toast(message);
+
+
     const handleRegister = async ()=>{
         console.log(formstate);
         try{
@@ -30,6 +50,7 @@ function RegistrationPage(props) {
     
             });
             console.log(response.data);
+            notify(response.data.message)
     
            }catch(err){
             let {response }  = err;
@@ -63,7 +84,7 @@ function RegistrationPage(props) {
             
             <Button className="registerbutton" onClick={handleRegister}>Register</Button>
             
-
+            <ToastContainer/>
 
 
         </Container>

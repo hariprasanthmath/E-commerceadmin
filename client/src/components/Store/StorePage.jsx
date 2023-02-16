@@ -79,7 +79,7 @@ function StorePage(props) {
         {
             cartPage ? 
 
-            <Box style={{marginTop:"60px"}} className='cardscontainer'>
+            <Box style={{marginTop:"100px"}} className='cardscontainer'>
          
            {
             currentpageData?.map((eachProduct)=>{
@@ -104,6 +104,11 @@ function StorePage(props) {
                           <Cart {...eachData}/>
                       )
                 })
+               }
+               {
+                cartData.length === 0 && <div style={{margin:"15px"}}>
+                     <img src="https://cdni.iconscout.com/illustration/premium/thumb/empty-cart-2130356-1800917.png" alt="emptycart"></img>
+                </div>
                }
                 </Box>
                 <Box style={{margin:"auto",width:isLargerThan800?"40%":"100%",marginTop:"0px"}}>

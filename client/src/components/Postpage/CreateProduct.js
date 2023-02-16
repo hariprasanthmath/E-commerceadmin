@@ -9,6 +9,9 @@ import Cookies from "universal-cookie"
 import { useDispatch } from 'react-redux';
 import { setLoginTrue } from '../../redux/actions/action';
 import App from '../ImageUpload/App';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function CreateProduct(props) {
     const imageRef = useRef();
     const [images, setImages] = useState(null)
@@ -40,6 +43,8 @@ function CreateProduct(props) {
     let [tokenstate, setToken] = useState();
     let cookies = new Cookies();
     let dispatch = useDispatch();
+
+    const notify = (message) => toast(message);
 
    useEffect(()=>{
     let token = cookies.get('jwt');
@@ -79,6 +84,7 @@ function CreateProduct(props) {
         
                 });
                 console.log(response);
+                notify(response.data)
         
                }catch(err){
         
@@ -125,7 +131,7 @@ function CreateProduct(props) {
           <Button onClick={handleSubmitCreateProduct}>Create Product</Button>
        </VStack>
         </Box>
-        
+        <ToastContainer/>
         
 
       </>

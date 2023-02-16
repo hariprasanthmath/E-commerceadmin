@@ -18,6 +18,7 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Box,
     // Button
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom';
@@ -39,17 +40,10 @@ function Profile(props) {
    });
    let [profilecurrent, setprofilecurrent] = useState({});
 
-    
-   
-
    useEffect(()=>{
     profileHandler();
 
    },[])
-
-
- 
-    
 
 
     const profileHandler = async () =>{
@@ -111,15 +105,17 @@ function Profile(props) {
                 <> 
                 {
                     viewstate === "view" ?
-                    <Flex className='profileeditcontainer'> 
+                    <Flex  className='profileeditcontainer'> 
+                       <Box className='admincontent'>
 
                         <VStack>
-                         <Text fontSize='xl' >{profilecurrent.name}</Text> 
-                         <Text fontSize='xl' >{profilecurrent.email}</Text> 
-                         <Text fontSize='xl' >{profilecurrent.mobile}</Text> 
-                         <Text fontSize='xl' >{profilecurrent.storename}</Text> 
+                         <Text fontSize='xl' ><span className='littledarktext'>Name : </span>{profilecurrent.name}</Text> 
+                         <Text fontSize='xl' ><span className='littledarktext'>Email : </span>{profilecurrent.email}</Text> 
+                         <Text fontSize='xl' ><span className='littledarktext'>Mobile : </span>{profilecurrent.mobile}</Text> 
+                         <Text fontSize='xl' ><span className='littledarktext'>Store Name :</span>{profilecurrent.storename}</Text> 
                          <Button onClick={()=>setviewstate("edit")}>Edit</Button>
                          </VStack>
+                       </Box>
                     
                     
                     </Flex> : 

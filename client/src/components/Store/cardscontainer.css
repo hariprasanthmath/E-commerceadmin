@@ -1,6 +1,12 @@
 .cardscontainer{
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
+    gap: 20px;
+    justify-content: center;
+    /* margin-left:"auto"; */
+    /* width: 80%; */
+    /* margin-top:"100px"; */
+    /* background-color: aqua; */
 }
 @media screen and (max-width: 767px){
     .cardscontainer{

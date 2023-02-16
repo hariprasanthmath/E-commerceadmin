@@ -77,7 +77,7 @@ app.post("/product", auth, async (req, res)=>{
 app.get("/products", async(req, res)=>{
     
     try{
-        
+        console.log(req.socket.remoteAddress,  "request ip");
         let allProducts = await ProductModel.find();
         // console.log(allProducts);
         res.status(201).send(allProducts);
@@ -191,6 +191,7 @@ app.post('/image', upload.single('image'), async (req, res) => {
   })
 
   app.all('/*', (req, res, next) => {
+    console.log(req.ip, req.ips, "request ip");
     const indexFile = path.join(__dirname, 'build', 'index.html');
     res.sendFile(indexFile);
 })

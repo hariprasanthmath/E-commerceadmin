@@ -16,14 +16,21 @@
     margin: 10px;
 }
 
+.productcard:hover{
+    box-shadow: rgba(0, 0, 0, 0.1) 10px 10px 12px;
+}
+
+
 .bottomcard{
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    margin: auto auto 10px auto ;
     padding: 10px;
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     background-color: #fc8181;
+    /* bottom: 10px; */
 
 }
 

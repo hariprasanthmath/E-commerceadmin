@@ -20,13 +20,15 @@ function App({images, setImages}) {
 
   const [file, setFile] = useState()
   const [description, setDescription] = useState("")
- 
+  const [loading, setLoading] = useState(false);
 
   const submit = async event => {
     event.preventDefault()
+    setLoading(true);
     const result = await postImage({image: file, description})
     console.log(result);
-    setImages(result.imagePath)
+    setImages(result.imagePath);
+    setLoading(false);
   }
 
   const fileSelected = event => {
@@ -48,7 +50,11 @@ function App({images, setImages}) {
       <form onSubmit={submit}>
         <input onChange={fileSelected} type="file" accept="image/*"></input>
         {/* <input value={description} onChange={e => setDescription(e.target.value)} type="text"></input> */}
-        <Button type="submit" style={{backgroundColor:"#6c9fda"}}>Upload</Button>
+       
+        {
+          loading ? <Button>Loading...</Button>:
+          <Button type="submit" style={{backgroundColor:"#6c9fda"}}>Upload</Button>
+        }
       </form>
 
     
